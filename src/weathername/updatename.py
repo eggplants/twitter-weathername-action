@@ -1,7 +1,7 @@
 from os import environ
 from sys import stderr
 
-import tweepy
+import tweepy  # type: ignore
 
 
 class UpdateName(object):

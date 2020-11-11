@@ -8,22 +8,6 @@ from weathername import GetTodayWeather, UpdateName
 dotenv_path = join(dirname(__file__), '.env')
 dotenv.load_dotenv(dotenv_path)
 
-'''
-ENV{
-    REQUIRED:
-        OPEN_WEATHER_API_TOKEN
-        TWITTER_CONSUMER_KEY
-        TWITTER_CONSUMER_SECRET
-        TWITTER_ACCESS_KEY
-        TWITTER_ACCESS_SECRET
-
-    OPTIONAL:
-        LOCATION_QUERY
-        NAME_FORMAT
-        ICON_SEP
-}
-'''
-
 
 def main() -> None:
     g = GetTodayWeather()

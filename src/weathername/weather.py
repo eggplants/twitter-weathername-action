@@ -23,9 +23,6 @@ class GetTodayWeather(object):
             environ.get('OPEN_WEATHER_API_TOKEN')
         ))
         res = res.json()
-        # print(type(res))
-        # exit()
-        # validate
         if 'city' not in res:
             print('invalid json was returned:', res, file=sys.stderr)
             exit(1)
