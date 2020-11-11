@@ -27,4 +27,5 @@ jobs:
           TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_ACCESS_SECRET }}
           TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
           LOCATION_QUERY: ${{ secrets.LOCATION_QUERY }}
-        run: weather_name.py
+        run: |
+          python src/main.py
