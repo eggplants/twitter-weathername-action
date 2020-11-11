@@ -2,7 +2,7 @@
 
 - Update Twitter's Username to today forecast of given location with GitHub Actions
 
-# Require
+## Require
 
 - [Openweathermap API Token](https://openweathermap.org/appid)
   - `OPEN_WEATHER_API_TOKEN`
