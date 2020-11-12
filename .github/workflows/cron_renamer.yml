@@ -17,4 +17,6 @@ jobs:
           twitter_access_key: ${{ secrets.TWITTER_ACCESS_KEY }}
           twitter_access_secret: ${{ secrets.TWITTER_ACCESS_SECRET }}
           location_query: tsukuba
+          name_format: "明日: [{}]"
+          icon_sep: "/"
           forecast_day: 1
