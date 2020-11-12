@@ -5,6 +5,7 @@ from os import environ
 from typing import List, Optional
 
 import requests
+from pytz import all_timezones
 from pytz import timezone as pytztimezone
 from pytz import utc
 
@@ -13,6 +14,12 @@ class GetTodayWeather(object):
 
     def __init__(self) -> None:
         self.weather_info, self.timezone = self.__get_weather()
+
+    def __valid_timezone_name(self, time_zone: str) -> Optional[str]:
+        if time_zone not in all_timezones:
+            raise ValueError('Invalid timezone string!: {}'.format(str))
+        else:
+            return time_zone
 
     def __get_weather(self):
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
@@ -28,7 +35,8 @@ class GetTodayWeather(object):
 
         time_zone = timezone(timedelta(seconds=res['city']['timezone']))
         if environ.get('INPUT_TIME_ZONE') != '':
-            got_tz = pytztimezone(environ.get('INPUT_TIME_ZONE'))
+            got_tz = pytztimezone(
+                self.__valid_timezone_name(environ.get('INPUT_TIME_ZONE')))
             now = d.utcnow()
             now_utc = now.replace(tzinfo=utc)
             now_got = now.astimezone(got_tz)
