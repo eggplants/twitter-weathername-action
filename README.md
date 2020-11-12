@@ -1,7 +1,5 @@
 # twitter-weathername-action
 
-[![Cron renamer](https://github.com/eggplants/twitter-weathername-action/workflows/Cron%20renamer/badge.svg)](https://github.com/eggplants/twitter-weathername-action/actions?query=workflow%3A%22Cron+renamer%22)
-
 ![demo](https://i.imgur.com/Mv8T1mV.png)
 
 - Update Twitter's Username to today forecast of given location with GitHub Actions
