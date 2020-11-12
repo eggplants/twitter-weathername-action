@@ -12,4 +12,5 @@ jobs:
           twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
           twitter_access_key: ${{ secrets.TWITTER_ACCESS_KEY }}
           twitter_access_secret: ${{ secrets.TWITTER_ACCESS_SECRET }}
-          location_query: ${{ secrets.LOCATION_QUERY }}
+          location_query: tsukuba
+          forecast_day: 1

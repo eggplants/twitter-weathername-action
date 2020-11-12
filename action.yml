@@ -1,6 +1,6 @@
 name: "Twitter Weathername"
 author: "haruna"
-description: "Update Twitter Username to today forecast of given location"
+description: "Update Twitter Username to a daily forecast of given location"
 inputs:
   open_weather_api_token:
     description: "Openweathermap API Token"
@@ -31,6 +31,10 @@ inputs:
     description: "String for joining icons"
     required: false
     default: ":"
+  forecast_day:
+    description: "Show the weather in the next n days (n=0 is today)"
+    required: false
+    default: "0"
 runs:
   using: "docker"
   image: "Dockerfile"

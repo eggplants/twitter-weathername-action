@@ -2,7 +2,7 @@ import sys
 from datetime import datetime as d
 from datetime import timedelta, timezone
 from os import environ
-from typing import List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 from pytz import all_timezones
@@ -21,7 +21,7 @@ class GetTodayWeather(object):
         else:
             return time_zone
 
-    def __get_weather(self):
+    def __get_weather(self) -> Tuple[Any, timezone]:
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
               'q={0}&lang=en&appid={1}'
         res = requests.get(url.format(
@@ -34,9 +34,10 @@ class GetTodayWeather(object):
             exit(1)
 
         time_zone = timezone(timedelta(seconds=res['city']['timezone']))
-        if environ.get('INPUT_TIME_ZONE') != '':
-            got_tz = pytztimezone(
-                self.__valid_timezone_name(environ.get('INPUT_TIME_ZONE')))
+        tz = environ.get('INPUT_TIME_ZONE', '')
+        self.__valid_timezone_name(tz)
+        if tz != '':
+            got_tz = pytztimezone(tz)
             now = d.utcnow()
             now_utc = now.replace(tzinfo=utc)
             now_got = now.astimezone(got_tz)
@@ -45,15 +46,19 @@ class GetTodayWeather(object):
 
         return (res, time_zone)
 
-    def today_weathers(self):
-        def filter_day(day, dt) -> bool:
+    def day_weathers(self) -> Dict[str, Any]:
+        def _filter(today_dt, dt, count: int) -> bool:
             dt = d.fromtimestamp(dt).astimezone(self.timezone)
-            return day <= dt < day + timedelta(days=1)
+            base_dt = today_dt + timedelta(days=count)
+            return base_dt <= dt < base_dt + timedelta(days=1)
 
-        t = d.today().astimezone(self.timezone)
+        today_dt = d.today().astimezone(self.timezone)
         weather_datas = self.weather_info['list']
-        today_weathers = [_ for _ in weather_datas if filter_day(t, _['dt'])]
-        return today_weathers
+        day_weathers = {}
+        for count in range(7):
+            day_weathers[str(count)] = [_ for _ in weather_datas
+                                        if _filter(today_dt, _['dt'], count)]
+        return day_weathers
 
     def weather_icons(self, weather_data) -> List[str]:
         icons = [self.__convert_icon(str(weather['weather'][0]['id']))

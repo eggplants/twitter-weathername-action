@@ -6,38 +6,38 @@
 
 - Update Twitter's Username to today forecast of given location with GitHub Actions
 
-## Require
+## Parameters
 
-- [Openweathermap API Token](https://openweathermap.org/appid)
-  - `OPEN_WEATHER_API_TOKEN`
-  - `TIME_ZONE (def: LOCATION_QUERY's local time zone)`
-- [Location query](https://openweathermap.org/current#name)
-  - `LOCATION_QUERY`
-  - City name, state code and country code divided by comma, use ISO 3166 country codes.
-- [Twitter API Token](https://developer.twitter.com/en/docs/twitter-api/getting-started/guide)
-  - `TWITTER_CONSUMER_KEY`
-  - `TWITTER_CONSUMER_SECRET`
-  - `TWITTER_ACCESS_KEY`
-  - `TWITTER_ACCESS_SECRET`
-- `NAME_FORMAT (def: "＜{}")`
-- `ICON_SEP (def: ":")`
+### Required
 
-```txt
-ENV{
-    REQUIRED:
-        OPEN_WEATHER_API_TOKEN
-        TWITTER_CONSUMER_KEY
-        TWITTER_CONSUMER_SECRET
-        TWITTER_ACCESS_KEY
-        TWITTER_ACCESS_SECRET
-        LOCATION_QUERY
+- `OPEN_WEATHER_API_TOKEN`
+  - [Openweathermap API Token](https://openweathermap.org/appid)
+- `LOCATION_QUERY`
+  - [Location query](https://openweathermap.org/current#name)
+  - City name, state code and country code divided by comma, use ISO 3166 country codes
+- `TWITTER_CONSUMER_KEY`
+- `TWITTER_CONSUMER_SECRET`
+- `TWITTER_ACCESS_KEY`
+- `TWITTER_ACCESS_SECRET`
+  - [Twitter API Token](https://developer.twitter.com/en/docs/twitter-api/getting-started/guide)
 
-    OPTIONAL:
-        TIME_ZONE
-        NAME_FORMAT
-        ICON_SEP
-}
-```
+### Optional
+
+- `TIME_ZONE`
+  - Def: LOCATION_QUERY's local time zone
+  - Time zone to be used as a time reference
+  - Ex. `Asia/Tokyo`
+- `NAME_FORMAT`
+  - Def: `＜{}`
+  - Username format
+  - `{}` is substituted by joined weather icons with `ICON_SEP`
+- `ICON_SEP`
+  - Def: `:`
+  - String for joining icons
+- `FORECAST_DAY`
+  - Def: `0`
+  - Show the weather in the next given (0~4) days
+  - `0` is today
 
 ## Example
 
@@ -57,10 +57,11 @@ jobs:
       - name: Change Name
         uses: eggplants/twitter-weathername-action@v1
         with:
-          OPEN_WEATHER_API_TOKEN: ${{ secrets.OPEN_WEATHER_API_TOKEN }}
-          TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
-          TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-          TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_ACCESS_SECRET }}
-          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
-          LOCATION_QUERY: ${{ secrets.LOCATION_QUERY }}
+          open_weather_api_token: ${{ secrets.OPEN_WEATHER_API_TOKEN }}
+          twitter_consumer_key: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          twitter_consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+          twitter_access_key: ${{ secrets.TWITTER_ACCESS_KEY }}
+          twitter_access_secret: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          location_query: tsukuba
+          forecast_day: 1
 ```
