@@ -27,7 +27,7 @@ class GetTodayWeather(object):
             exit(1)
 
         time_zone = timezone(timedelta(seconds=res['city']['timezone']))
-        if 'INPUT_TIME_ZONE' in environ:
+        if environ.get('INPUT_TIME_ZONE') != '':
             got_tz = pytztimezone(environ.get('INPUT_TIME_ZONE'))
             now = d.utcnow()
             now_utc = now.replace(tzinfo=utc)
