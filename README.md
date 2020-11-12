@@ -8,8 +8,9 @@
 
 - [Openweathermap API Token](https://openweathermap.org/appid)
   - `OPEN_WEATHER_API_TOKEN`
+  - `TIME_ZONE (def: LOCATION_QUERY's local time zone)`
 - [Location query](https://openweathermap.org/current#name)
-  - `LOCATION_QUERY (def: "tsukuba")`
+  - `LOCATION_QUERY`
   - City name, state code and country code divided by comma, use ISO 3166 country codes.
 - [Twitter API Token](https://developer.twitter.com/en/docs/twitter-api/getting-started/guide)
   - `TWITTER_CONSUMER_KEY`
@@ -27,9 +28,10 @@ ENV{
         TWITTER_CONSUMER_SECRET
         TWITTER_ACCESS_KEY
         TWITTER_ACCESS_SECRET
+        LOCATION_QUERY
 
     OPTIONAL:
-        LOCATION_QUERY
+        TIME_ZONE
         NAME_FORMAT
         ICON_SEP
 }

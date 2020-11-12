@@ -1,11 +1,12 @@
-import json
 import sys
 from datetime import datetime as d
-from datetime import timedelta
+from datetime import timedelta, timezone
 from os import environ
 from typing import List, Optional
 
 import requests
+from pytz import timezone as pytztimezone
+from pytz import utc
 
 
 class GetTodayWeather(object):
@@ -17,7 +18,7 @@ class GetTodayWeather(object):
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
               'q={0}&lang=en&appid={1}'
         res = requests.get(url.format(
-            environ.get('INPUT_LOCATION_QUERY', 'tsukuba'),
+            environ.get('INPUT_LOCATION_QUERY'),
             environ.get('INPUT_OPEN_WEATHER_API_TOKEN')
         ))
         res = res.json()
@@ -25,13 +26,23 @@ class GetTodayWeather(object):
             print('invalid json was returned:', res, file=sys.stderr)
             exit(1)
 
-        return (res, res['city']['timezone'])
+        time_zone = timezone(timedelta(seconds=res['city']['timezone']))
+        if 'INPUT_TIME_ZONE' in environ:
+            got_tz = pytztimezone(environ.get('INPUT_TIME_ZONE'))
+            now = d.utcnow()
+            now_utc = now.replace(tzinfo=utc)
+            now_got = now.astimezone(got_tz)
+            gap = now_utc - now_got
+            time_zone = timezone(timedelta(seconds=gap.seconds))
+
+        return (res, time_zone)
 
     def today_weathers(self):
         def filter_day(day, dt) -> bool:
-            return day <= d.fromtimestamp(dt) < day + timedelta(days=1)
+            dt = d.fromtimestamp(dt).astimezone(self.timezone)
+            return day <= dt < day + timedelta(days=1)
 
-        t = d.today()
+        t = d.today().astimezone(self.timezone)
         weather_datas = self.weather_info['list']
         today_weathers = [_ for _ in weather_datas if filter_day(t, _['dt'])]
         return today_weathers

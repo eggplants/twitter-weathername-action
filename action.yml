@@ -19,8 +19,10 @@ inputs:
     required: true
   location_query:
     description: "City name, state code and country code divided by comma, use ISO 3166 country codes"
+    required: true
+  time_zone:
+    description: "Time zone to be used as a time reference (ex. Asia/Tokyo) (def: LOCATION_QUERY's local time zone)"
     required: false
-    default: "tsukuba"
   name_format:
     description: "Username format ({} is substituted by joined weather icons with icon_sep)"
     required: false
