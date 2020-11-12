@@ -15,11 +15,10 @@ class GetTodayWeather(object):
     def __init__(self) -> None:
         self.weather_info, self.timezone = self.__get_weather()
 
-    def __valid_timezone_name(self, time_zone: str) -> Optional[str]:
+    def __valid_timezone_name(self, time_zone: str) -> None:
         if time_zone not in all_timezones:
-            raise ValueError('Invalid timezone string!: {}'.format(str))
-        else:
-            return time_zone
+            raise ValueError(
+                'Invalid timezone string!: {}'.format(time_zone))
 
     def __get_weather(self) -> Tuple[Any, timezone]:
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
@@ -35,8 +34,8 @@ class GetTodayWeather(object):
 
         time_zone = timezone(timedelta(seconds=res['city']['timezone']))
         tz = environ.get('INPUT_TIME_ZONE', '')
-        self.__valid_timezone_name(tz)
         if tz != '':
+            self.__valid_timezone_name(tz)
             got_tz = pytztimezone(tz)
             now = d.utcnow()
             now_utc = now.replace(tzinfo=utc)
