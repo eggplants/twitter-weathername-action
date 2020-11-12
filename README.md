@@ -36,3 +36,29 @@ ENV{
         ICON_SEP
 }
 ```
+
+## Example
+
+- [cron_renamer.yml](https://github.com/eggplants/twitter-weathername-action/blob/main/.github/workflows/cron_renamer.yml)
+
+```yml
+name: Cron renamer
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Change Name
+        uses: eggplants/twitter-weathername-action@v1
+        with:
+          OPEN_WEATHER_API_TOKEN: ${{ secrets.OPEN_WEATHER_API_TOKEN }}
+          TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
+          TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
+          TWITTER_ACCESS_KEY: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          TWITTER_ACCESS_SECRET: ${{ secrets.TWITTER_ACCESS_SECRET }}
+          LOCATION_QUERY: ${{ secrets.LOCATION_QUERY }}
+```
