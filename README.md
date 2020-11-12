@@ -36,15 +36,3 @@ ENV{
         ICON_SEP
 }
 ```
-
-## On GitHub Actions
-
-- Fork or import this repo
-- Set each required parameters to it from `[Settings] Tab ->[Secrets] Tab`
-- If that is correct, your Twitter Username will be changed on 00:00
-
-## On local
-
-- Edit `.env.example`
-- Rename to `.env`
-- Run: `python weather_name.py`
