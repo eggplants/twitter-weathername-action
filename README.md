@@ -11,7 +11,7 @@
 - [Location query](https://openweathermap.org/current#name)
   - `LOCATION_QUERY (def: "tsukuba")`
   - City name, state code and country code divided by comma, use ISO 3166 country codes.
-- [Twittter API Token](https://developer.twitter.com/en/docs/twitter-api/getting-started/guide)
+- [Twitter API Token](https://developer.twitter.com/en/docs/twitter-api/getting-started/guide)
   - `TWITTER_CONSUMER_KEY`
   - `TWITTER_CONSUMER_SECRET`
   - `TWITTER_ACCESS_KEY`
