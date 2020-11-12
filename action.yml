@@ -1,0 +1,37 @@
+name: 'Twitter Weathername'
+author: 'haruna'
+description: 'Update Twitter's Username to today forecast of given location'
+inputs:
+  open_weather_api_token:
+    description: 'Openweathermap API Token'
+    required: true
+  twitter_consumer_key:
+    description: 'Twitter API consumer key'
+    required: true
+  twitter_consumer_secret:
+    description: 'Twitter API consumer secret key'
+    required: true
+  twitter_access_key:
+    description: 'Twitter API access key'
+    required: true
+  twitter_access_secret:
+    description: 'Twitter API access secret key'
+    required: true
+  location_query:
+    description: 'City name, state code and country code divided by comma, use ISO 3166 country codes'
+    required: false
+    default: 'tsukuba'
+  name_format:
+    description: 'A list of all the markdown files in the repo, separated by commas. Defaults to README.md'
+    required: false
+    default: '＜{}'
+  icon_sep:
+    description: 'A list of all the markdown files in the repo, separated by commas. Defaults to README.md'
+    required: false
+    default: ':'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'link'
+  color: 'green'

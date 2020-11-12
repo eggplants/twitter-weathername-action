@@ -19,8 +19,8 @@ class GetTodayWeather(object):
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
               'q={0}&lang=en&appid={1}'
         res = requests.get(url.format(
-            environ.get('LOCATION_QUERY', 'tsukuba'),
-            environ.get('OPEN_WEATHER_API_TOKEN')
+            environ.get('INPUT_LOCATION_QUERY', 'tsukuba'),
+            environ.get('INPUT_OPEN_WEATHER_API_TOKEN')
         ))
         res = res.json()
         if 'city' not in res:
