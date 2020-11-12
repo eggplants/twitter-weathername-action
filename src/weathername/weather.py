@@ -11,9 +11,9 @@ import requests
 class GetTodayWeather(object):
 
     def __init__(self) -> None:
-        self.timezone = self.weather_info['city']['timezone']
+        self.weather_info, self.timezone = self.__get_weather()
 
-    def get_weather(self):
+    def __get_weather(self):
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
               'q={0}&lang=en&appid={1}'
         res = requests.get(url.format(
@@ -25,8 +25,7 @@ class GetTodayWeather(object):
             print('invalid json was returned:', res, file=sys.stderr)
             exit(1)
 
-        self.weather_info, self.timezone = res, res['city']['timezone']
-        return res
+        return (res, res['city']['timezone'])
 
     def today_weathers(self):
         def filter_day(day, dt) -> bool:
