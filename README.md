@@ -1,5 +1,7 @@
 # twitter-weathername-action
 
+[![Test](https://github.com/eggplants/twitter-weathername-action/workflows/Test/badge.svg)](https://github.com/eggplants/twitter-weathername-action/actions/runs/359325081)
+
 ![demo](https://i.imgur.com/Mv8T1mV.png)
 
 - Update Twitter's Username to today forecast of given location with GitHub Actions
