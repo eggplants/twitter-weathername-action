@@ -11,8 +11,6 @@ import requests
 class GetTodayWeather(object):
 
     def __init__(self) -> None:
-
-        self.weather_info = json.loads(open('sampledata.json', 'r').read())
         self.timezone = self.weather_info['city']['timezone']
 
     def get_weather(self):
