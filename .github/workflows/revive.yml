@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Check if 'n(th day)%59==0'
       run: |
-        (($(date +%-j -d $i\ day)%59==0))
+        (($(date +%-j -d $i\ day)%59==0)) || exit 0
     - uses: actions/checkout@v1
     - name: Configure git
       run: |
