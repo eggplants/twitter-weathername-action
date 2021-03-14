@@ -1,0 +1,29 @@
+name: Revive
+
+on:
+  schedule:
+  - cron: 0 0 * * *
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check if 'n(th day)%59==0'
+      run: |
+        (($(date +%-j -d $i\ day)%59==0)) || exit 0
+    - uses: actions/checkout@v1
+    - name: Configure git
+      run: |
+        git config user.name "${{ env.GITHUB_ACTOR }}"
+        git config user.email "${{ secrets.MAIL }}"
+        git remote set-url origin https://${{ env.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git checkout master
+    - name: Run getinfo.sh
+      run: |
+        touch update.log
+        date >> update.log
+    - name: Commit
+      run: |
+        git add .
+        git commit -m "Update: $(date +%y%m%d)"
+        git push origin master
