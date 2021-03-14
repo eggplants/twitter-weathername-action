@@ -17,11 +17,11 @@ jobs:
     - uses: actions/checkout@v1
     - name: Configure git
       run: |
-        echo "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}"
+        echo "https://${GITHUB_ACTOR}"
         git config user.name "$GITHUB_ACTOR"
         git config user.email "${{ secrets.MAIL }}"
         git remote set-url origin "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}"
-        git checkout master
+        git checkout "${GITHUB_REF##*/}"
     - name: Run getinfo.sh
       run: |
         touch update.log
