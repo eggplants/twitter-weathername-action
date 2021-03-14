@@ -13,13 +13,13 @@ jobs:
     steps:
     - name: Check if 'n(th day)%59==0'
       run: |
-        (($(date +%-j -d $i\ day)%59==0)) || exit 0
+        (($(date +%-j -d $i\ day)%59==0))
     - uses: actions/checkout@v1
     - name: Configure git
       run: |
-        git config user.name "${{ env.GITHUB_ACTOR }}"
+        git config user.name "$GITHUB_ACTOR"
         git config user.email "${{ secrets.MAIL }}"
-        git remote set-url origin https://${{ env.GITHUB_ACTOR }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+        git remote set-url origin "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}"
         git checkout master
     - name: Run getinfo.sh
       run: |
