@@ -2,15 +2,12 @@ name: Revive
 
 on:
   schedule:
-    - cron: 0 0 * * *
+    - cron: 0 0 * */1 *
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-    - name: Check if 'n(th day)%59==0'
-      run: |
-        (($(date +%-j)%59==0))
     - uses: actions/checkout@v1
     - name: Configure git
       run: |
