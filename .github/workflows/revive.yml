@@ -3,9 +3,6 @@ name: Revive
 on:
   schedule:
     - cron: 0 0 * * *
-  push:
-    branches:
-      - main
 
 jobs:
   update:
@@ -22,9 +19,8 @@ jobs:
         git config user.email "${{ secrets.MAIL }}"
         git remote set-url origin "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}"
         git checkout "${GITHUB_REF##*/}"
-    - name: Run getinfo.sh
+    - name: Update log
       run: |
-        touch update.log
         date >> update.log
     - name: Commit
       run: |
