@@ -30,4 +30,4 @@ jobs:
       run: |
         git add .
         git commit -m "Update: $(date +%y%m%d)"
-        git push origin master
+        git push origin "${GITHUB_REF##*/}"
