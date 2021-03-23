@@ -9,7 +9,7 @@ class UpdateName(object):
     def __init__(self) -> None:
         self.api = self.__auth()
 
-    def __auth(self):
+    def _auth(self):
         try:
             auth = tweepy.OAuthHandler(
                 environ.get('INPUT_TWITTER_CONSUMER_KEY'),
