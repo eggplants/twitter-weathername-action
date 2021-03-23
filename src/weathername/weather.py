@@ -13,14 +13,14 @@ from pytz import utc
 class GetTodayWeather(object):
 
     def __init__(self) -> None:
-        self.weather_info, self.timezone = self.__get_weather()
+        self.weather_info, self.timezone = self._get_weather()
 
-    def __valid_timezone_name(self, time_zone: str) -> None:
+    def _valid_timezone_name(self, time_zone: str) -> None:
         if time_zone not in all_timezones:
             raise ValueError(
                 'Invalid timezone string!: {}'.format(time_zone))
 
-    def __get_weather(self) -> Tuple[Any, timezone]:
+    def _get_weather(self) -> Tuple[Any, timezone]:
         url = 'http://api.openweathermap.org/data/2.5/forecast?'\
               'q={0}&lang=en&appid={1}'
         res = requests.get(url.format(
@@ -35,7 +35,7 @@ class GetTodayWeather(object):
         time_zone = timezone(timedelta(seconds=res['city']['timezone']))
         tz = environ.get('INPUT_TIME_ZONE', '')
         if tz != '':
-            self.__valid_timezone_name(tz)
+            self._valid_timezone_name(tz)
             got_tz = pytztimezone(tz)
             now = d.utcnow()
             now_utc = now.replace(tzinfo=utc)
@@ -46,7 +46,7 @@ class GetTodayWeather(object):
         return (res, time_zone)
 
     def day_weathers(self) -> Dict[str, Any]:
-        def _filter(today_dt, dt, count: int) -> bool:
+        def filter_(today_dt, dt, count: int) -> bool:
             dt = d.fromtimestamp(dt).astimezone(self.timezone)
             base_dt = today_dt + timedelta(days=count)
             return base_dt <= dt < base_dt + timedelta(days=1)
@@ -56,15 +56,15 @@ class GetTodayWeather(object):
         day_weathers = {}
         for count in range(7):
             day_weathers[str(count)] = [_ for _ in weather_datas
-                                        if _filter(today_dt, _['dt'], count)]
+                                        if filter_(today_dt, _['dt'], count)]
         return day_weathers
 
     def weather_icons(self, weather_data) -> List[str]:
-        icons = [self.__convert_icon(str(weather['weather'][0]['id']))
+        icons = [self._convert_icon(str(weather['weather'][0]['id']))
                  for weather in weather_data]
         return icons
 
-    def __convert_icon(self, weather_id: str) -> str:
+    def _convert_icon(self, weather_id: str) -> str:
 
         # modified: https://gist.github.com/michels/90327b8d284646a238e6
         default = '🌀'
@@ -72,8 +72,8 @@ class GetTodayWeather(object):
         if not weather_id:
             return default
 
-        car = self.__judge_car(weather_id[0])
-        cdr = self.__judge_id(weather_id)
+        car = self._judge_car(weather_id[0])
+        cdr = self._judge_id(weather_id)
         if car:
             return car
         elif cdr:
@@ -81,7 +81,7 @@ class GetTodayWeather(object):
         else:
             return default
 
-    def __judge_car(self, car: str) -> Optional[str]:
+    def _judge_car(self, car: str) -> Optional[str]:
         thunderstorm = '⚡'    # Code: 200's
         drizzle = '🌧️'         # Code: 300's
         rain = '☔'            # Code: 500's
@@ -99,7 +99,7 @@ class GetTodayWeather(object):
         elif car == '7':
             return atmosphere
 
-    def __judge_id(self, id_: str) -> Optional[str]:
+    def _judge_id(self, id_: str) -> Optional[str]:
         clearSky = '☀'        # Code: 800 clear sky
         fewClouds = '⛅'       # Code: 801 sun behind clouds
         clouds = '☁'          # Code: 802-803-804 clouds general
