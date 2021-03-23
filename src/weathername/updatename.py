@@ -7,7 +7,7 @@ import tweepy  # type: ignore
 class UpdateName(object):
 
     def __init__(self) -> None:
-        self.api = self.__auth()
+        self.api = self._auth()
 
     def _auth(self):
         try:
