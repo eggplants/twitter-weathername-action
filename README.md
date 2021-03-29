@@ -41,8 +41,6 @@
 
 ## Example
 
-- [cron_renamer.yml](https://github.com/eggplants/twitter-weathername-action/blob/main/.github/workflows/cron_renamer.yml)
-
 ```yml
 name: Cron renamer
 
